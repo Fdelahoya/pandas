@@ -1,0 +1,38 @@
+#insert here imports and CSV load data
+import pandas as pd
+jeopardy = pd.read_csv("c:/Users/fidel/Desktop/learn/Python/jeopardy.csv") 
+pd.set_option("display.max_colwidth", -1)
+
+
+
+#data cleaning process here, capitalization...
+jeopardy.columns=["Show Number", "Air Date", "Round", "Category", "Value", "Question", "Answer"]
+jeopardy['Question'] = jeopardy['Question'].str.lower()
+jeopardy['Value'] = jeopardy['Value'].str.replace('$', '')
+jeopardy['Value'] = jeopardy['Value'].str.replace(',', '')
+#jeopardy_valid = jeopardy.loc[jeopardy['Value'] != 'None']
+#jeopardy_valid['Value'] = pd.to_numeric(jeopardy_valid['Value'])
+
+#random generation functions for questions
+random_question = jeopardy['Question'].sample(n=1).iloc[0]
+
+
+#function that stores the correct answer for the random generated question
+
+correct_answer = jeopardy.loc[jeopardy['Question'] == random_question, 'Answer'].iloc[0]
+
+
+#input function
+print('Welcome to Jeopardy!  so this is the first question: ')
+print(random_question)
+print('answer:')
+actual_answer = input()
+
+#compare function
+def compare_answers():
+    if actual_answer == correct_answer:
+        print('Correct!')
+    else:
+        print('Incorrect!, the correct answer is: ' + correct_answer)    
+
+compare_answers()
